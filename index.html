@@ -11,7 +11,7 @@
 body {
     margin: 0;
     padding: 0;
-    background: url('flowers.png') no-repeat center center fixed;
+    background: url('https://png.pngtree.com/background/20210716/original/pngtree-retro-groovy-pattern-with-swirling-flowers-and-curves-in-vibrant-reds-picture-image_16413013.jpg') no-repeat center center fixed;
     background-size: cover;
     font-family: 'Poppins', sans-serif;
     overflow: hidden;
@@ -20,16 +20,19 @@ body {
 .flower {
     position: absolute;
     width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, #ff4d6d 40%, #ff8fab 60%);
+    border-radius: 50%;
     cursor: pointer;
     animation: spin 4s linear infinite;
+    top: 40%;
+    left: 45%;
 }
 
 @keyframes spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
-
-#flower1 { top: 30%; left: 40%; }
 
 .modal {
     position: fixed;
@@ -41,12 +44,13 @@ body {
     border-radius: 20px;
     text-align: center;
     display: none;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
 .modal h2 {
-    color: #333;
+    color: #222;
     margin-bottom: 30px;
+    font-weight: 600;
 }
 
 button {
@@ -76,7 +80,7 @@ button {
 
 <body>
 
-<img src="flowers.png" class="flower" id="flower1" onclick="openQuestion()">
+<div class="flower" onclick="openQuestion()"></div>
 
 <div class="modal" id="questionBox">
     <h2 id="questionText">Will this beautiful girl be my girlfriend?</h2>
@@ -92,7 +96,7 @@ function openQuestion() {
 
 function areYouSure() {
     document.getElementById("questionText").innerText = "Are you sure?";
-    
+
     let yesBtn = document.querySelector(".yesBtn");
     yesBtn.classList.add("disabled");
     yesBtn.disabled = true;
@@ -109,7 +113,7 @@ function areYouSure() {
 function finalAnswer() {
     document.body.innerHTML = `
         <div style="display:flex; justify-content:center; align-items:center; height:100vh; font-family:Poppins;">
-            <h1 style="font-size:60px; color:white; text-shadow:2px 2px 10px black;">
+            <h1 style="font-size:70px; color:white; text-shadow:2px 2px 15px black;">
                 yeahhhh !
             </h1>
         </div>
