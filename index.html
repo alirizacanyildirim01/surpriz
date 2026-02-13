@@ -1,125 +1,120 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Küçük Bir Sürpriz</title>
+<title>Special Question</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
 body {
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #ff758c, #ff7eb3);
-    font-family: Arial, sans-serif;
-    text-align: center;
+    background: url('flowers.png') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
     overflow: hidden;
-    color: white;
-}
-
-.screen {
-    position: absolute;
-    width: 100%;
-    top: 35%;
-}
-
-button {
-    padding: 15px 30px;
-    font-size: 18px;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    margin: 20px;
-    transition: 0.3s;
-}
-
-#yesBtn {
-    background: #ff4d6d;
-    color: white;
-}
-
-#noBtn {
-    background: white;
-    color: #ff4d6d;
-    position: absolute;
 }
 
 .flower {
     position: absolute;
-    font-size: 24px;
-    animation: fall linear infinite;
+    width: 120px;
+    cursor: pointer;
+    animation: spin 4s linear infinite;
 }
 
-@keyframes fall {
-    0% { top: -10%; }
-    100% { top: 110%; }
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+#flower1 { top: 30%; left: 40%; }
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    display: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.modal h2 {
+    color: #333;
+    margin-bottom: 30px;
+}
+
+button {
+    padding: 12px 25px;
+    font-size: 16px;
+    margin: 10px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.yesBtn {
+    background: #ff4d6d;
+    color: white;
+}
+
+.noBtn {
+    background: #ddd;
+}
+
+.disabled {
+    background: #aaa !important;
+    cursor: not-allowed;
 }
 </style>
 </head>
 
 <body>
 
-<div id="intro" class="screen">
-    <h1>Bir şey soracağım ama hazır mısın? 🌸</h1>
-    <button onclick="start()">Hazırım 💫</button>
-</div>
+<img src="flowers.png" class="flower" id="flower1" onclick="openQuestion()">
 
-<div id="main" class="screen" style="display:none;">
-    <h1>Benimle sevgili olur musun? 💖</h1>
-    <button id="yesBtn">Evet 😍</button>
-    <button id="noBtn">Hayır 🙈</button>
+<div class="modal" id="questionBox">
+    <h2 id="questionText">Will this beautiful girl be my girlfriend?</h2>
+    <button class="yesBtn" onclick="finalAnswer()">Yes</button>
+    <button class="noBtn" onclick="areYouSure()">No</button>
 </div>
 
 <script>
 
-function start() {
-    document.getElementById("intro").style.display = "none";
-    document.getElementById("main").style.display = "block";
+function openQuestion() {
+    document.getElementById("questionBox").style.display = "block";
 }
 
-const yesBtn = document.getElementById("yesBtn");
-const noBtn = document.getElementById("noBtn");
+function areYouSure() {
+    document.getElementById("questionText").innerText = "Are you sure?";
+    
+    let yesBtn = document.querySelector(".yesBtn");
+    yesBtn.classList.add("disabled");
+    yesBtn.disabled = true;
 
-let yesSize = 18;
-let noSize = 18;
+    let noBtn = document.querySelector(".noBtn");
+    noBtn.onclick = function() {
+        document.getElementById("questionText").innerText = "Will this beautiful girl be my girlfriend?";
+        yesBtn.classList.remove("disabled");
+        yesBtn.disabled = false;
+        noBtn.onclick = areYouSure;
+    }
+}
 
-noBtn.addEventListener("mouseover", function() {
-    noBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
-    noBtn.style.top = Math.random() * (window.innerHeight - 100) + "px";
-
-    yesSize += 5;
-    noSize -= 2;
-
-    yesBtn.style.fontSize = yesSize + "px";
-    noBtn.style.fontSize = noSize + "px";
-});
-
-noBtn.addEventListener("click", function() {
-    alert("Emin misin? 😏");
-});
-
-yesBtn.addEventListener("click", function() {
+function finalAnswer() {
     document.body.innerHTML = `
-        <h1 style="margin-top:40vh;">
-        Artık resmi olarak çok tatlı bir çiftiz 💍💖<br><br>
-        En doğru kararı verdin 😌
-        </h1>
+        <div style="display:flex; justify-content:center; align-items:center; height:100vh; font-family:Poppins;">
+            <h1 style="font-size:60px; color:white; text-shadow:2px 2px 10px black;">
+                yeahhhh !
+            </h1>
+        </div>
     `;
-});
-
-function createFlower() {
-    const flower = document.createElement("div");
-    flower.classList.add("flower");
-    flower.innerHTML = "🌸";
-    flower.style.left = Math.random() * 100 + "vw";
-    flower.style.animationDuration = (3 + Math.random() * 4) + "s";
-    document.body.appendChild(flower);
-
-    setTimeout(() => {
-        flower.remove();
-    }, 6000);
 }
-
-setInterval(createFlower, 400);
 
 </script>
 
