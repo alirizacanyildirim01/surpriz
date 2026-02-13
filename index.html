@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Special Question</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.flower {
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, #ff4d6d 40%, #ff9a9e 70%);
+    border-radius: 50%;
+    cursor: pointer;
+    animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.modal {
+    position: fixed;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    display: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.modal h2 {
+    color: #333;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.yesBtn {
+    background: #ff4d6d;
+    color: white;
+}
+
+.noBtn {
+    background: #ccc;
+}
+
+.disabled {
+    background: #999 !important;
+    cursor: not-allowed;
+}
+</style>
+</head>
+
+<body>
+
+<div class="flower" onclick="openQuestion()"></div>
+
+<div class="modal" id="box">
+    <h2 id="text">Will this beautiful girl be my girlfriend?</h2>
+    <button class="yesBtn" onclick="finalAnswer()">Yes</button>
+    <button class="noBtn" onclick="areYouSure()">No</button>
+</div>
+
+<script>
+
+function openQuestion(){
+    document.getElementById("box").style.display="block";
+}
+
+function areYouSure(){
+    let text = document.getElementById("text");
+    let yesBtn = document.querySelector(".yesBtn");
+    let noBtn = document.querySelector(".noBtn");
+
+    text.innerText="Are you sure?";
+    yesBtn.disabled=true;
+    yesBtn.classList.add("disabled");
+
+    noBtn.onclick=function(){
+        text.innerText="Will this beautiful girl be my girlfriend?";
+        yesBtn.disabled=false;
+        yesBtn.classList.remove("disabled");
+        noBtn.onclick=areYouSure;
+    }
+}
+
+function finalAnswer(){
+    document.body.innerHTML="<h1 style='font-size:60px;color:white;'>yeahhhh !</h1>";
+}
+
+</script>
+
+</body>
+</html>
