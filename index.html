@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Küçük Bir Sürpriz</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    font-family: Arial, sans-serif;
+    text-align: center;
+    overflow: hidden;
+    color: white;
+}
+
+.screen {
+    position: absolute;
+    width: 100%;
+    top: 35%;
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    margin: 20px;
+    transition: 0.3s;
+}
+
+#yesBtn {
+    background: #ff4d6d;
+    color: white;
+}
+
+#noBtn {
+    background: white;
+    color: #ff4d6d;
+    position: absolute;
+}
+
+.flower {
+    position: absolute;
+    font-size: 24px;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    0% { top: -10%; }
+    100% { top: 110%; }
+}
+</style>
+</head>
+
+<body>
+
+<div id="intro" class="screen">
+    <h1>Bir şey soracağım ama hazır mısın? 🌸</h1>
+    <button onclick="start()">Hazırım 💫</button>
+</div>
+
+<div id="main" class="screen" style="display:none;">
+    <h1>Benimle sevgili olur musun? 💖</h1>
+    <button id="yesBtn">Evet 😍</button>
+    <button id="noBtn">Hayır 🙈</button>
+</div>
+
+<script>
+
+function start() {
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("main").style.display = "block";
+}
+
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+
+let yesSize = 18;
+let noSize = 18;
+
+noBtn.addEventListener("mouseover", function() {
+    noBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+    noBtn.style.top = Math.random() * (window.innerHeight - 100) + "px";
+
+    yesSize += 5;
+    noSize -= 2;
+
+    yesBtn.style.fontSize = yesSize + "px";
+    noBtn.style.fontSize = noSize + "px";
+});
+
+noBtn.addEventListener("click", function() {
+    alert("Emin misin? 😏");
+});
+
+yesBtn.addEventListener("click", function() {
+    document.body.innerHTML = `
+        <h1 style="margin-top:40vh;">
+        Artık resmi olarak çok tatlı bir çiftiz 💍💖<br><br>
+        En doğru kararı verdin 😌
+        </h1>
+    `;
+});
+
+function createFlower() {
+    const flower = document.createElement("div");
+    flower.classList.add("flower");
+    flower.innerHTML = "🌸";
+    flower.style.left = Math.random() * 100 + "vw";
+    flower.style.animationDuration = (3 + Math.random() * 4) + "s";
+    document.body.appendChild(flower);
+
+    setTimeout(() => {
+        flower.remove();
+    }, 6000);
+}
+
+setInterval(createFlower, 400);
+
+</script>
+
+</body>
+</html>
